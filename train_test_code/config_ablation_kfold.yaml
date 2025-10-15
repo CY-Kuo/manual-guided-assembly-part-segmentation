@@ -1,0 +1,76 @@
+# --- MODEL PATHS ---
+student_model: "/scratch/user/kuocy/IKEAVideo/0815Results_complete_labeling/yolo11s-seg_0816_123254_f2/weights/best.pt"
+teacher_model: "/scratch/user/kuocy/IKEAVideo/0815Results_complete_labeling/yolo11s-seg_0816_024507_f0/weights/best.pt"
+
+
+# IMAGES
+camera_root: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train" #/camera
+images_camera_dirname: "camera"
+images_manual_dirname: "manual"
+img_exts: [".jpg", ".jpeg", ".png"]
+
+# MASKS (binary per-image RLE for camera images)
+mask_root_camera: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/mask_labels/train" #/camera"
+# (optional; unused by default, but supported if you want)
+mask_root_manual: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/mask_labels/train" #/manual"
+mask_suffix: "_rle.json"
+
+img_size: 640
+num_classes: 1
+mean: [0.0, 0.0, 0.0]
+std:  [1.0, 1.0, 1.0]
+
+# TAPS
+distill_student_layers: ["model.6", "model.10"]
+distill_teacher_layers: ["model.6", "model.10"]
+head_student_layers: ["model.23"]
+head_teacher_layers: ["model.23"]
+aux_head_tap: "model.23"
+
+# LOSSES
+lambda_aux: 1.0 #0.5 next
+lambda_feat: 0.0 #0.25 next
+lambda_at: 0.0 #0.1 next
+lambda_xattn: 0.0 #0.05 next
+xattn: { heads: 2, dim_head: 16, pool: 2 }
+lambda_stat: 0.5
+lambda_roi:  0.5
+
+# set pool to 1 if no need for pooling , set to 4 if need even lighter
+
+# OPTIM / IO
+epochs: 100
+batch_size: 8
+workers: 4
+lr: 1.0e-4
+weight_decay: 1.0e-4
+amp: true
+device: 0
+out_dir: "train_ablation_kfold_results"
+save_every: 10
+
+# VIS
+viz_every_steps: 0 #set 0 to disable
+viz_max_n: 4
+viz_dir: "viz_train"
+viz_thresh: 0.5
+
+# VALIDATION (set these to your val split; use train to smoke test)
+val_camera_root: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/val/camera"
+val_mask_root_camera: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/mask_labels/val/camera"
+
+# EVAL cadence & limits
+eval_every: 10          # run after every epoch (use 2–5 if you want it less often)
+eval_max_images: 200   # limit for speed; set null to use all
+eval_conf_thres: 0.25  # YOLO seg head conf
+eval_iou_nms: 0.7      # YOLO seg head NMS IoU
+
+# FIXED 3-PANEL VIZ (same images across training)
+fixed_viz_paths:
+  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0000.jpg"
+  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0001.jpg"
+  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0002.jpg"
+  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0003.jpg"
+  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0004.jpg"
+fixed_viz_stride: 0         # run every 5 epochs (set 0 to disable) 
+fixed_viz_dir: "viz_fixed"  # saved under out_dir
