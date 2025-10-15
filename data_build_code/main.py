@@ -4,7 +4,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 from tqdm import tqdm
 from pycocotools import mask as maskUtils
-sys.path.append("/scratch/user/kuocy/IKEAVideo/src")
+sys.path.append("/src")
 from pathlib import Path
 from IKEAVideo.dataloader.dataset_keyframe import KeyframeDataset
 from IKEAVideo.dataloader.assembly_video   import load_video, load_frame
