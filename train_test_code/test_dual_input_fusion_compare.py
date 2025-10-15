@@ -1,4 +1,5 @@
 # test_dual_fusion_only.py — dual-input fusion eval with channel-compat loader
+# save the overlay masks images for visualization (test data only)
 from pathlib import Path
 import sys, yaml, json, numpy as np
 from PIL import Image
@@ -10,20 +11,21 @@ import re
 from smart_prior import refine_aux_prior, filter_student_instances_with_prior
 
 # ========== USER EDITABLE ==========
-STUDENT_MODEL = r"C:\Users\djkim\Documents\Yolo11-seg_train_results\0815Results_complete_labeling\runs\segment\grid\scratch\user\kuocy\IKEAVideo\model_weights\yolo11s-seg_0816_123254_f2\weights\best.pt"
-TEACHER_MODEL = r"C:\Users\djkim\Documents\Yolo11-seg_train_results\0815Results_complete_labeling\runs\segment\grid\scratch\user\kuocy\IKEAVideo\model_weights\yolo11s-seg_0816_094739_f4\weights\best.pt"
-CKPT_PATH     = r"C:\Users\djkim\Documents\Yolo11-seg_train_results\0912Train_ablation_kfold_results\fold0\fuse_6_10_aux\ckpt_epoch_100.pt"
+STUDENT_MODEL = # file path (model .pt pretrained on camera data )
+TEACHER_MODEL = # file path (model .pt pretrained on manual data )
+CKPT_PATH     = # file path (model .pt trained on dual input )
 IMG_SIZE      = 640
 DEVICE        = "0"                           # "0" | "cpu"
-PROJECT       = r"C:\Users\djkim\Documents\mini_2\overlay_visual"
+PROJECT       = # file path (output directory )
 RUN_NAME      = "model.6_10_23"
+
 AUX_HEAD_TAP  = "model.23"
 NUM_CLASSES   = 1
 CONF_TH       = 0.2 #0.5
-CAM_YAML      = r"C:\Users\djkim\Documents\mini_2\parts_single_cam.yaml"
-MAN_YAML      = r"C:\Users\djkim\Documents\mini_2\parts_single_man.yaml"
+CAM_YAML      = # file path (yaml file include the file path of validation and test data, camera images and labels)
+MAN_YAML      = # file path (yaml file include the file path of validation and test data, manual images and labels)
 
-MASK_ROOT_CAMERA = r"C:\Users\djkim\Documents\mini_2\mask_labels\test\camera"
+MASK_ROOT_CAMERA = # file path
 MASK_SUFFIX      = "_rle.json"
 
 # ---- AUX overlay thresholding (for the blue mask) ----
@@ -758,3 +760,4 @@ if __name__ == "__main__":
     except Exception as e:
         print("[ERROR]", e)
         sys.exit(1)
+
