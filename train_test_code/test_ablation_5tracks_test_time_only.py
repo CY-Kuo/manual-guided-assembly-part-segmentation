@@ -20,17 +20,17 @@ except Exception:
 from smart_prior import refine_aux_prior, filter_student_instances_with_prior
 
 # ================= USER CONFIG =================
-STUDENT_MODEL = r"C:\Users\djkim\Documents\Yolo11-seg_train_results\0815Results_complete_labeling\runs\segment\grid\scratch\user\kuocy\IKEAVideo\model_weights\yolo11s-seg_0816_123254_f2\weights\best.pt"
-TEACHER_MODEL = r"C:\Users\djkim\Documents\Yolo11-seg_train_results\0815Results_complete_labeling\runs\segment\grid\scratch\user\kuocy\IKEAVideo\model_weights\yolo11s-seg_0816_094739_f4\weights\best.pt"
+STUDENT_MODEL = # file path (model .pt pretrained on camera data )
+TEACHER_MODEL = # file path (model .pt pretrained on manual data )
 
 # pick the aux-on ablation ckpt you’re testing (fuse_aux_only / fuse_6_aux / fuse_10_aux / fuse_6_10_aux)
-CKPT_PATH     = r"C:\Users\djkim\Documents\Yolo11-seg_train_results\train_ablation_results\fuse_aux_only\ckpt_epoch_100.pt"
+CKPT_PATH     = # file path (model .pt trained on dual data )
 
-CAM_YAML      = r"C:\Users\djkim\Documents\mini_2\parts_single_cam.yaml"
-MAN_YAML      = r"C:\Users\djkim\Documents\mini_2\parts_single_man.yaml"
+CAM_YAML      = # file path (yaml file include the file path to test data camera image and label)
+MAN_YAML      = # file path (yaml file include the file path to test data manual image and label)
 
 MASK_SUFFIX             = "_rle.json"
-EXPLICIT_TEST_MASK_ROOT = r"C:\Users\djkim\Documents\mini_2\mask_labels\test\camera"
+EXPLICIT_TEST_MASK_ROOT = # file path (test data camera label)
 
 IMG_SIZE      = 640
 DEVICE        = "0"   # "0" or "cpu"
@@ -941,3 +941,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"{ts()} [ERROR] {e}")
         sys.exit(1)
+
