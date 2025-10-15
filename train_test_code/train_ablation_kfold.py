@@ -13,8 +13,8 @@ from train_ablation import (
 )
 
 # ---- USER DEFAULTS ----
-DEFAULT_CONFIG_PATH = "/scratch/user/kuocy/IKEAVideo/model_code/distill_train_code/config_ablation_kfold.yaml"
-DEFAULT_KFOLD_ROOT  = "/scratch/user/kuocy/IKEAVideo/model_code/distill_train_code/train_ablation_kfold_results/_kfold_temp"
+DEFAULT_CONFIG_PATH = #file path (config yaml file)
+DEFAULT_KFOLD_ROOT  = #file path (root of k fold dataset)
 
 def _seed_all(seed=0):
     random.seed(seed); np.random.seed(seed)
