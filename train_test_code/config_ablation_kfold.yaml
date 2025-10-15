@@ -1,18 +1,18 @@
 # --- MODEL PATHS ---
-student_model: "/scratch/user/kuocy/IKEAVideo/0815Results_complete_labeling/yolo11s-seg_0816_123254_f2/weights/best.pt"
-teacher_model: "/scratch/user/kuocy/IKEAVideo/0815Results_complete_labeling/yolo11s-seg_0816_024507_f0/weights/best.pt"
+student_model: 
+teacher_model: 
 
 
 # IMAGES
-camera_root: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train" #/camera
+camera_root: #file path(to the folder that contains all the training data - images)
 images_camera_dirname: "camera"
 images_manual_dirname: "manual"
 img_exts: [".jpg", ".jpeg", ".png"]
 
 # MASKS (binary per-image RLE for camera images)
-mask_root_camera: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/mask_labels/train" #/camera"
+mask_root_camera: #file path(to the folder that contains all the training data - camera label)
 # (optional; unused by default, but supported if you want)
-mask_root_manual: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/mask_labels/train" #/manual"
+mask_root_manual: #file path(to the folder that contains all the training data - manual label)
 mask_suffix: "_rle.json"
 
 img_size: 640
@@ -56,8 +56,8 @@ viz_dir: "viz_train"
 viz_thresh: 0.5
 
 # VALIDATION (set these to your val split; use train to smoke test)
-val_camera_root: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/val/camera"
-val_mask_root_camera: "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/mask_labels/val/camera"
+val_camera_root: #file path
+val_mask_root_camera: #file path
 
 # EVAL cadence & limits
 eval_every: 10          # run after every epoch (use 2–5 if you want it less often)
@@ -67,10 +67,6 @@ eval_iou_nms: 0.7      # YOLO seg head NMS IoU
 
 # FIXED 3-PANEL VIZ (same images across training)
 fixed_viz_paths:
-  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0000.jpg"
-  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0001.jpg"
-  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0002.jpg"
-  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0003.jpg"
-  - "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2/images/train/camera/0004.jpg"
+  - #file path to the image you would like to visualize
 fixed_viz_stride: 0         # run every 5 epochs (set 0 to disable) 
 fixed_viz_dir: "viz_fixed"  # saved under out_dir
