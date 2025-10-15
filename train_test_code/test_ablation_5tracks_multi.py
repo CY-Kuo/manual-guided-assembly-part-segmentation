@@ -25,11 +25,11 @@ from smart_prior import refine_aux_prior, filter_student_instances_with_prior
 
 # =================== USER CONFIG (global) ===================
 # Student / teacher (HPRC)
-STUDENT_MODEL = "/scratch/user/kuocy/IKEAVideo/0815Results_complete_labeling/yolo11s-seg_0816_123254_f2/weights/best.pt"
-TEACHER_MODEL = "/scratch/user/kuocy/IKEAVideo/0815Results_complete_labeling/yolo11s-seg_0816_024507_f0/weights/best.pt"
+STUDENT_MODEL = # file path (model .pt pretrained on camera data )
+TEACHER_MODEL = # file path (model .pt pretrained on manual data )
 
 # K-fold ablation checkpoints (HPRC)
-CKPT_ROOT  = "/scratch/user/kuocy/IKEAVideo/model_code/distill_train_code/train_ablation_kfold_results"
+CKPT_ROOT  = # file path (folder contains model .pt pretrained on manual data )
 FOLDS      = [3, 4]  # change to subset if needed
 ABLATIONS  = ["fuse_aux_only", "fuse_6_aux", "fuse_10_aux", "fuse_6_10_aux"]
 
@@ -50,8 +50,7 @@ def _build_ckpt_map(root, folds, abls):
 CKPTS = _build_ckpt_map(CKPT_ROOT, FOLDS, ABLATIONS)
 
 # Base dataset folder (HPRC) — your previous 'mini_2' now lives here.
-BASE_YAML_DIR = "/scratch/user/kuocy/IKEAVideo/dataset_code/mini_2"
-
+BASE_YAML_DIR = # file path (folder contains the parts_single.yaml files)
 # “VAL” yaml files used for threshold calibration (unchanged filenames)
 CAM_YAML_VAL = os.path.join(BASE_YAML_DIR, "parts_single_cam.yaml")
 MAN_YAML_VAL = os.path.join(BASE_YAML_DIR, "parts_single_man.yaml")
