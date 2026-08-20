@@ -1,17 +1,29 @@
 # MAPS: Manual-Guided Assembly-Part Segmentation
 
-**MAPS** is a manual-guided vision framework for segmenting assembly parts under clutter and occlusion. It uses a camera image together with the aligned 2D assembly-manual step as structural guidance, without requiring CAD or depth at deployment.
+**MAPS** is a manual-guided vision framework for segmenting assembly parts under clutter and occlusion. It combines a camera image with the aligned 2D assembly-manual step as structural guidance, without requiring CAD or depth at deployment.
 
 **Paper:** Chia Ying Kuo and Sheng Jen Hsieh, *Design and evaluation of an assembly part segmentation framework using 2D structural guidance for robotic manipulation in confined workspaces*, **The International Journal of Advanced Manufacturing Technology**, 2026.  
 https://doi.org/10.1007/s00170-026-18468-w
 
-## Highlights
+> **Code status.** This repository is a cleaned research-code companion to the published paper. The public-facing interfaces were extracted from the experimental workflow for readability and reuse; they have not been revalidated end-to-end after refactoring. Model weights and third-party data are not distributed here.
 
-- YOLO11s-seg camera/student branch with a frozen manual/teacher branch.
-- Manual features provide structural guidance through feature fusion and an auxiliary mask prior.
-- The auxiliary prior filters/refines camera-view instance masks rather than replacing the detector output.
-- Evaluated on IKEA-Manuals-at-Work assembly scenes.
-- Reported against the camera-only baseline in the paper: **+10.4% Dice**, **+16.7% IoU**, and BoundaryF **0.3043 → 0.5815**.
+## What MAPS does
+
+- Uses a **YOLO11s-seg camera/student branch** together with a **frozen manual/teacher branch**.
+- Injects manual-derived structural guidance through feature fusion and an auxiliary mask prior.
+- Uses that prior to filter and refine camera-view instance masks rather than replacing the detector output.
+- Operates from 2D camera and manual inputs without requiring CAD or depth at deployment.
+- Was evaluated on **IKEA-Manuals-at-Work** assembly scenes.
+
+### Results reported in the paper
+
+Relative to the camera-only baseline, the paper reports:
+
+- **+10.4% Dice**
+- **+16.7% IoU**
+- **BoundaryF: 0.3043 → 0.5815**
+
+These numbers are publication results, not newly reproduced measurements from the cleaned repository.
 
 ```mermaid
 flowchart LR
@@ -37,11 +49,12 @@ training/             Clean one-configuration training interface
 evaluation/           Single-pair inference and dataset evaluation
 data/                 Dataset preparation utilities
 baselines/             Camera-only and comparison baselines
-assets/                User-owned figures for the paper companion
+assets/                Figures for the paper companion
 tests/                 Lightweight import/CLI/metric checks
+train_test_code/       Original training engine retained for research parity
 ```
 
-The original experiment-oriented training engine is temporarily retained under `train_test_code/` so the cleaned training interface can be verified against the HPRC workflow before the final public release. Exploratory k-fold and evaluation drivers are not part of the intended public interface.
+The old k-fold launchers, multi-track evaluation drivers, HPRC-specific paths, and one-off experiment scripts are intentionally excluded from the cleaned interface.
 
 ## Installation
 
@@ -57,13 +70,13 @@ For the SAM comparison baselines:
 pip install -r requirements-baselines.txt
 ```
 
-PyTorch/CUDA installation can be adjusted to match the target GPU environment.
+PyTorch/CUDA installation may need to be adjusted for the target GPU environment.
 
 ## Data
 
 The dataset is **not redistributed** in this repository. Obtain IKEA-Manuals-at-Work from its official source and follow its license. See [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md).
 
-The prepared MAPS layout uses paired camera/manual images and camera-view RLE masks, for example:
+A prepared fold uses paired camera/manual images and camera-view RLE masks, for example:
 
 ```text
 fold3/
@@ -79,7 +92,7 @@ fold3/
 
 ## Training
 
-The study trained five configurations for **100 epochs each**:
+The ablation study included five configurations, each trained for **100 epochs**:
 
 ```text
 base
@@ -99,7 +112,7 @@ python training/train.py \
   --out-dir runs/fold3/fuse_aux_only
 ```
 
-Edit only the model/example paths in `training/config.yaml`; the public config contains no machine-specific HPRC paths.
+The example uses `fuse_aux_only` because it matches the checkpoint used in the retained inference workflow; the repository does not present it as the only configuration studied.
 
 ## Inference
 
@@ -116,7 +129,7 @@ python evaluation/run_inference.py \
   --device 0
 ```
 
-The cleaned inference path reconstructs the fusion and auxiliary head from checkpoint metadata, obtains the camera/student and manual/teacher features, builds the structural prior, and saves the refined segmentation mask.
+The cleaned inference path reconstructs the fusion and auxiliary head from checkpoint metadata, obtains camera/student and manual/teacher features, builds the structural prior, and saves the refined segmentation mask.
 
 ## Dataset evaluation
 
@@ -132,7 +145,7 @@ python evaluation/evaluate.py \
   --save-masks
 ```
 
-The evaluator reports per-image and aggregate Dice, IoU, Precision, Recall, BoundaryF, AP50, and mAP50-95.
+The evaluation interface includes Dice, IoU, Precision, Recall, BoundaryF, AP50, and mAP50-95 reporting.
 
 ## Baselines
 
@@ -143,11 +156,13 @@ The evaluator reports per-image and aggregate Dice, IoU, Precision, Recall, Boun
 - `sam_box_from_yolo.py` — YOLO detections used as SAM box prompts.
 - `direct_fusion.py` — learnable camera/manual feature fusion without the frozen-teacher/distillation setup.
 
-These files intentionally omit the old machine-specific experiment orchestration.
+These files intentionally omit machine-specific experiment orchestration.
 
-## Notes on reproducibility
+## Reproducibility scope
 
-Model weights are not included. The training and inference interfaces accept model/checkpoint paths explicitly. Before public release, the cleaned branch should be run once on HPRC to confirm parity with the original research workflow and checkpoint format.
+This is a **research-code release**, not a turnkey reproduction environment. The repository preserves the core method, training configuration interface, inference path, evaluation utilities, and comparison baselines while removing local cluster paths and exploratory experiment infrastructure. Users reproducing or extending the work should expect to adapt dataset locations, model weights, CUDA/PyTorch versions, and environment-specific details.
+
+For authoritative experimental settings and reported results, refer to the published paper.
 
 ## Citation
 
