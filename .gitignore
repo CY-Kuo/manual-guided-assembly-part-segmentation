@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.DS_Store
+
+# Model weights and experiment outputs
+*.pt
+*.pth
+weights/
+runs/
+outputs/
+eval_runs/
+train_ablation_kfold_results/
+
+# Local datasets
+mini_2/
+datasets/
+data/raw/
+data/processed/
