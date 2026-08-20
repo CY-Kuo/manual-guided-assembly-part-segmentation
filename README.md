@@ -5,7 +5,7 @@
 **Paper:** Chia Ying Kuo and Sheng Jen Hsieh, *Design and evaluation of an assembly part segmentation framework using 2D structural guidance for robotic manipulation in confined workspaces*, **The International Journal of Advanced Manufacturing Technology**, 2026.  
 https://doi.org/10.1007/s00170-026-18468-w
 
-> **Code status.** This repository is a cleaned research-code companion to the published paper. The public-facing interfaces were extracted from the experimental workflow for readability and reuse; they have not been revalidated end-to-end after refactoring. Model weights and third-party data are not distributed here.
+> **Code status.** This repository is a cleaned research-code companion to the published paper. The public-facing interfaces were extracted from the experimental workflow for readability and reuse. Model weights and third-party data are not distributed here.
 
 ## What MAPS does
 
