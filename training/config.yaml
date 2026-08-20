@@ -1,0 +1,76 @@
+# MAPS training configuration
+# Replace example paths with local files before training.
+
+student_model: "path/to/camera_student_best.pt"
+teacher_model: "path/to/manual_teacher_best.pt"
+
+images_camera_dirname: "camera"
+images_manual_dirname: "manual"
+img_exts: [".jpg", ".jpeg", ".png"]
+mask_suffix: "_rle.json"
+
+img_size: 640
+num_classes: 1
+mean: [0.0, 0.0, 0.0]
+std: [1.0, 1.0, 1.0]
+
+distill_student_layers: ["model.6", "model.10"]
+distill_teacher_layers: ["model.6", "model.10"]
+head_student_layers: ["model.23"]
+head_teacher_layers: ["model.23"]
+aux_head_tap: "model.23"
+
+lambda_aux: 1.0
+lambda_feat: 0.0
+lambda_at: 0.0
+lambda_xattn: 0.0
+lambda_stat: 0.5
+lambda_roi: 0.5
+xattn:
+  heads: 2
+  dim_head: 16
+  pool: 2
+
+# Five ablation settings used in the reported training study.
+ablations:
+  - base
+  - fuse_10_aux
+  - fuse_6_10_aux
+  - fuse_6_aux
+  - fuse_aux_only
+
+fusion_dims:
+  model.23: 128
+  model.10: 96
+  model.6: 96
+fusion_tokens:
+  model.23: 4
+  model.10: 4
+  model.6: 4
+lambda_fuse_reg:
+  model.10: 0.10
+  model.6: 0.05
+align_distill_to_fusion: true
+
+epochs: 100
+batch_size: 8
+workers: 4
+lr: 1.0e-4
+weight_decay: 1.0e-4
+amp: true
+device: 0
+save_every: 10
+
+# Validation cadence used by the training engine.
+eval_every: 10
+eval_max_images: 200
+eval_conf_thres: 0.25
+eval_iou_nms: 0.7
+
+# These paths are supplied by training/train.py from --fold-root.
+camera_root: ""
+mask_root_camera: ""
+mask_root_manual: ""
+val_camera_root: ""
+val_mask_root_camera: ""
+out_dir: "runs"
