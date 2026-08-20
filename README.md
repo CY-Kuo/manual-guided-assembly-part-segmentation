@@ -25,21 +25,37 @@ Relative to the camera-only baseline, the paper reports:
 
 These numbers are publication results, not newly reproduced measurements from the cleaned repository.
 
-```mermaid
-flowchart LR
-    C[Camera image] --> S[YOLO11s-seg student]
-    M[Aligned manual step] --> T[Frozen manual teacher]
-    S --> SF[Student feature]
-    T --> TF[Manual structural feature]
-    SF --> F[Structure fusion]
-    TF --> F
-    F --> A[Auxiliary mask head]
-    S --> I[Camera instance masks]
-    A --> P[Structural prior]
-    I --> R[Prior-guided refinement]
-    P --> R
-    R --> O[Refined assembly-part mask]
-```
+## Method overview
+
+<p align="center">
+  <img src="assets/method_overview.png" width="95%" alt="MAPS end-to-end method overview">
+</p>
+
+<p align="center">
+  <em>End-to-end MAPS workflow. A frozen manual-image teacher provides structural guidance to the camera-image student through distillation, structure fusion, and an auxiliary mask head.</em>
+</p>
+
+## Qualitative results
+
+<p align="center">
+  <img src="assets/qualitative_results.png" width="95%" alt="MAPS qualitative segmentation comparisons">
+</p>
+
+<p align="center">
+  <em>Representative visual comparisons from the published study across the camera-only YOLO11s-seg baseline, post-processing and SAM-based baselines, and the evaluated MAPS fusion configurations.</em>
+</p>
+
+The examples highlight segmentation behavior across multiple assembly scenes with clutter, occlusion, and varying object visibility. For the full quantitative analysis and experimental protocol, refer to the paper.
+
+## Architecture details
+
+<p align="center">
+  <img src="assets/architecture_details.png" width="95%" alt="Detailed MAPS teacher-student architecture">
+</p>
+
+<p align="center">
+  <em>Detailed teacher-student architecture. Distillation is used during training, while structure fusion and the auxiliary segmentation path provide manual-derived structural guidance that carries into inference.</em>
+</p>
 
 ## Repository structure
 
