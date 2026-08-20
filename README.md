@@ -187,5 +187,7 @@ For authoritative experimental settings and reported results, refer to the publi
 
 ## License
 
-- **Code:** Apache-2.0; see [`LICENSE`](LICENSE).
-- **Data:** not included; see [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md).
+- **Project code:** GNU Affero General Public License v3.0 (`AGPL-3.0-only`); see [`LICENSE`](LICENSE).
+- **Third-party software/dependencies:** remain subject to their respective licenses.
+- **Dataset:** not redistributed; see [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md) and the dataset provider's terms.
+- **Model weights:** not redistributed and are not licensed by this repository unless explicitly stated otherwise.
