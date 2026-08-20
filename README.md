@@ -64,13 +64,11 @@ maps/                 Reusable MAPS modules
 training/             Clean one-configuration training interface
 evaluation/           Single-pair inference and dataset evaluation
 data/                 Dataset preparation utilities
-baselines/             Camera-only and comparison baselines
-assets/                Figures for the paper companion
-tests/                 Lightweight import/CLI/metric checks
-train_test_code/       Original training engine retained for research parity
+baselines/            Camera-only and comparison baselines
+assets/               Figures for the paper companion
+tests/                Lightweight import/CLI/metric checks
+train_test_code/      Original training engine retained for research parity
 ```
-
-The old k-fold launchers, multi-track evaluation drivers, HPRC-specific paths, and one-off experiment scripts are intentionally excluded from the cleaned interface.
 
 ## Installation
 
@@ -80,7 +78,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-For the SAM comparison baselines:
+For the comparison baselines:
 
 ```bash
 pip install -r requirements-baselines.txt
@@ -128,8 +126,6 @@ python training/train.py \
   --out-dir runs/fold3/fuse_aux_only
 ```
 
-The example uses `fuse_aux_only` because it matches the checkpoint used in the retained inference workflow; the repository does not present it as the only configuration studied.
-
 ## Inference
 
 Run MAPS on one camera/manual pair:
@@ -144,8 +140,6 @@ python evaluation/run_inference.py \
   --out-dir outputs/example \
   --device 0
 ```
-
-The cleaned inference path reconstructs the fusion and auxiliary head from checkpoint metadata, obtains camera/student and manual/teacher features, builds the structural prior, and saves the refined segmentation mask.
 
 ## Dataset evaluation
 
@@ -172,7 +166,6 @@ The evaluation interface includes Dice, IoU, Precision, Recall, BoundaryF, AP50,
 - `sam_box_from_yolo.py` — YOLO detections used as SAM box prompts.
 - `direct_fusion.py` — learnable camera/manual feature fusion without the frozen-teacher/distillation setup.
 
-These files intentionally omit machine-specific experiment orchestration.
 
 ## Reproducibility scope
 
