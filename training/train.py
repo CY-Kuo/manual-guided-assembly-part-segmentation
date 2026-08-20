@@ -9,9 +9,20 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import sys
 from pathlib import Path
 
-from train_test_code.train_ablation import (
+# The original training engine uses sibling imports (for example
+# ``from dataset_pairs import PairedSegDataset``). Add only that directory to
+# the module search path so the engine runs exactly as it did on HPRC while the
+# public CLI remains path-independent. After HPRC verification we can fold the
+# engine into the cleaned package without changing behavior.
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+_LEGACY_ENGINE_DIR = _REPO_ROOT / "train_test_code"
+if str(_LEGACY_ENGINE_DIR) not in sys.path:
+    sys.path.insert(0, str(_LEGACY_ENGINE_DIR))
+
+from train_ablation import (  # noqa: E402
     ABLATION_GRID,
     Cfg,
     _strip_unknown_cfg_keys,
